@@ -21,15 +21,28 @@ int displayboard(int b[], int n);
 
 int main() {
   int i = 4;
+  int firstSolution = 0;
   
+  //Make the main loop for the first 10 tries for n = 4...20
   while (i <=20) {
     for (int j = 1; j <= 10; j++) {
+      //Make board of n*n size.
       int b[i*i];
-      
+      //Placeholder for queen at the beginning of each row is 0.
       for (int k = 0; k < n; k++) {
         b[k*i] = 0;
       }
+      //Swap places of queens.
       randperm(b[], i);
+      
+      //Only display first solution.
+      if (checkboard(b,n) {
+        if (firstSolution < 1) {
+          displayboard(b,n);
+          count ++;
+        }
+      }
+          
     }
   }
 
@@ -59,5 +72,30 @@ int checkboard(int b[], int n) {
 }
 
 int displayboard(int b[], int n) {
-
+  int displayCol = 0;
+  printf("[");
+  //First for loop prints the columns of each queen.
+  for (int i = 0; i < n; i++) {
+     for (int j = 0; j < n; j++) {
+        if (b[(i*n)+j)] != 0) {
+          continue;
+        }
+        else if (b[(i*n)+j)] == 0) {
+          printf("%d",j);
+        }
+     }
+  }
+  printf("]\n");
+  //Second for loop displays the actual board, with dashes as empty spaces and "*" as queens.
+  for (int i = 0; i < n; i++) {
+     for (int j = 0; j < n; j++) {
+        if (b[(i*n)+j)] != 0) {
+          printf("- ";
+        }
+        else if (b[(i*n)+j)] == 0) {
+          printf("*");
+        }
+     }
+     printf("\n");
+  }
 }
