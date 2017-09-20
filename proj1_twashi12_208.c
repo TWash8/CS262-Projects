@@ -22,9 +22,11 @@ int displayboard(int b[], int n);
 int main() {
   int i = 4;
   int firstSolution = 0;
+  int permutations = 0;
   
   //Make the main loop for the first 10 tries for n = 4...20
   while (i <=20) {
+    permutations = 0;
     for (int j = 1; j <= 10; j++) {
       //Make board of n*n size.
       int b[i*i];
@@ -37,6 +39,7 @@ int main() {
       
       //Only display first solution.
       if (checkboard(b,n) {
+        permutations ++;
         if (firstSolution < 1) {
           displayboard(b,n);
           count ++;
@@ -44,6 +47,7 @@ int main() {
       }
           
     }
+  i++;
   }
 
 }
@@ -55,19 +59,35 @@ void randperm(int b[], int n) {
 }
 
 int checkboard(int b[], int n) {
-  int cols[n];
-  int countCols;
+  int queens[n];
   
-  //Checks for no duplucates in columns
+  //First loop checks for no duplucates in columns
   for (int i = 0; i < n; i++) {
-    coundCols = 0;
     for (int j = 1; j <= n; j++) {
-      if (b[i] == b[i-1+(j*n)]) {
+      if (b[i] == b[i+(j*n)]) {
         return 0;
       }
     }
   }
   
+  //Second loop saves the columns of each queen.
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < n; j ++) {
+     if (b[i*n]+j == 0) {
+       queens.add(j);
+     }
+    }
+  }
+  
+  //Third loop checks if two queens don't share a diagonal
+  for (int i = 0; i < n; i++) {
+    for (int j = i+1; j < n; j++) {
+     if (abs(queens[i]-queens[j]) == (i-j)) {
+      return 0; 
+     }
+    }
+  }
+  //Returns one if this board is a solution.
   return 1;
 }
 
