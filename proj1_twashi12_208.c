@@ -2,8 +2,8 @@
 //CS 262 Lab Section 208
 //Project 3
 
-#define <stdio.h>
-#define <stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #define max(a,b) \
 ({ __typeof__ (a) _a = (a); \
@@ -20,48 +20,57 @@ int checkboard(int b[], int n);
 int displayboard(int b[], int n);
 
 int main() {
-  int i = 4;
-  int firstSolution = 0;
-  int permutations = 0;
+  int size = 4;
+//  int firstSolution = 0;
+//  int permutations = 0;
   srandom(2592);
-  
+
   //Make the main loop for the first 10 tries for n = 4...20
-  while (i <=20) {
-    permutations = 0;
+  while (size <=4) {
+//    permutations = 0;
     for (int j = 1; j <= 10; j++) {
+      int count = 0;
       //Make board of n*n size.
-      int b[i*i];
+      int b[size*size];
       //Placeholder for queen at the beginning of each row is 0.
-      for (int k = 0; k < n; k++) {
-        b[k*i] = 0;
+      for (int k = 0; k < size; k++) {
+        b[k*size] = 8;
       }
       //Swap places of queens.
-      randperm(b[], i);
-      
+      randperm(b, size);
+
       //Only display first solution.
-      if (checkboard(b,n) {
-        permutations ++;
-        if (firstSolution < 1) {
-          displayboard(b,n);
-          count ++;
-        }
-      }
-          
+//      if (checkboard(b,size) == 1) {
+  //      permutations ++;
+    //    if (firstSolution < 1) {
+          printf("\n%d solution\n", size);
+          count = displayboard(b,size);
+          printf("%d", count);
+    //      firstSolution ++;
+    //    }
+      //}
+
     }
-  i++;
+    size ++;
   }
 
 }
 
 void randperm(int b[], int n) {
-  for (int i = n-1; i >= 0; i--) {
-    
+  for (int row = 0; row < n; row++) {
+    for (int i = n-1; i >= 0; i--) {
+      int j = rand() % n;
+      int temp = b[j];
+      b[j] = b[i];
+      b[i] = temp;
+    }
   }
 }
 
 int checkboard(int b[], int n) {
   int queens[n];
-  
+  int index = 0;
+
   //First loop checks for no duplucates in columns
   for (int i = 0; i < n; i++) {
     for (int j = 1; j <= n; j++) {
@@ -70,21 +79,21 @@ int checkboard(int b[], int n) {
       }
     }
   }
-  
+
   //Second loop saves the columns of each queen.
   for (int i = 0; i < n; i++) {
     for (int j = 0; j < n; j ++) {
      if (b[i*n]+j == 0) {
-       queens.add(j);
+       queens[index++] = j;
      }
     }
   }
-  
+
   //Third loop checks if two queens don't share a diagonal
   for (int i = 0; i < n; i++) {
     for (int j = i+1; j < n; j++) {
-     if (abs(queens[i]-queens[j]) == (i-j)) {
-      return 0; 
+     if (abs(queens[j]-queens[i]) == abs(j-i)) {
+      return 0;
      }
     }
   }
@@ -93,15 +102,14 @@ int checkboard(int b[], int n) {
 }
 
 int displayboard(int b[], int n) {
-  int displayCol = 0;
   printf("[");
   //First for loop prints the columns of each queen.
   for (int i = 0; i < n; i++) {
      for (int j = 0; j < n; j++) {
-        if (b[(i*n)+j)] != 0) {
+        if (b[(i*n)+j] != 8) {
           continue;
         }
-        else if (b[(i*n)+j)] == 0) {
+        if (b[(i*n)+j] == 8) {
           printf("%d",j);
         }
      }
@@ -110,13 +118,14 @@ int displayboard(int b[], int n) {
   //Second for loop displays the actual board, with dashes as empty spaces and "*" as queens.
   for (int i = 0; i < n; i++) {
      for (int j = 0; j < n; j++) {
-        if (b[(i*n)+j)] != 0) {
-          printf("- ";
+        if (b[(i*n)+j] != 8) {
+          printf("- ");
         }
-        else if (b[(i*n)+j)] == 0) {
-          printf("*");
+        if (b[(i*n)+j] == 8) {
+          printf("* ");
         }
      }
      printf("\n");
   }
+  return 1;
 }
