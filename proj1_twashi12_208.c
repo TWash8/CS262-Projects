@@ -23,6 +23,7 @@ int main() {
   int i = 4;
   int firstSolution = 0;
   int permutations = 0;
+  srandom(2592);
   
   //Make the main loop for the first 10 tries for n = 4...20
   while (i <=20) {
@@ -54,7 +55,7 @@ int main() {
 
 void randperm(int b[], int n) {
   for (int i = n-1; i >= 0; i--) {
-    int d = srandom(2592);
+    
   }
 }
 
