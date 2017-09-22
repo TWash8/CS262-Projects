@@ -60,9 +60,9 @@ void randperm(int b[], int n) {
   for (int row = 0; row < n; row++) {
     for (int i = n-1; i >= 0; i--) {
       int j = rand() % n;
-      int temp = b[j];
-      b[j] = b[i];
-      b[i] = temp;
+      int temp = b[(row*n)+j];
+      b[(row*n)+j] = b[(row*n)+i];
+      b[(row*n)+i] = temp;
     }
   }
 }
