@@ -30,11 +30,12 @@ int main() {
 //    permutations = 0;
     for (int j = 1; j <= 10; j++) {
       int count = 0;
-      //Make board of n*n size.
-      int b[size*size];
+      //Make board of n*n size and have num for putting in each index.
+      int b[size];
+      int num = 0;
       //Placeholder for queen at the beginning of each row is 0.
       for (int k = 0; k < size; k++) {
-        b[k*size] = 8;
+        b[k] = num++;
       }
       //Swap places of queens.
       randperm(b, size);
@@ -57,44 +58,27 @@ int main() {
 }
 
 void randperm(int b[], int n) {
-  for (int row = 0; row < n; row++) {
     for (int i = n-1; i >= 0; i--) {
       int j = rand() % n;
-      int temp = b[(row*n)+j];
-      b[(row*n)+j] = b[(row*n)+i];
-      b[(row*n)+i] = temp;
+      int temp = b[j];
+      b[j] = b[i];
+      b[i] = temp;
     }
-  }
 }
 
 int checkboard(int b[], int n) {
   int queens[n];
   int index = 0;
 
-  //First loop checks for no duplucates in columns
+  //Loop checks for no duplucates in columns and no sharring diagonals
   for (int i = 0; i < n; i++) {
     for (int j = 1; j <= n; j++) {
-      if (b[i] == b[i+(j*n)]) {
+      if (b[i] == b[j]) {
         return 0;
+      if (abs(b[j]-b[i]) == abs(j-i)) {
+        return 0;
+        }
       }
-    }
-  }
-
-  //Second loop saves the columns of each queen.
-  for (int i = 0; i < n; i++) {
-    for (int j = 0; j < n; j ++) {
-     if (b[i*n]+j == 0) {
-       queens[index++] = j;
-     }
-    }
-  }
-
-  //Third loop checks if two queens don't share a diagonal
-  for (int i = 0; i < n; i++) {
-    for (int j = i+1; j < n; j++) {
-     if (abs(queens[j]-queens[i]) == abs(j-i)) {
-      return 0;
-     }
     }
   }
   //Returns one if this board is a solution.
@@ -102,26 +86,22 @@ int checkboard(int b[], int n) {
 }
 
 int displayboard(int b[], int n) {
+  int place = 0;
   printf("[");
   //First for loop prints the columns of each queen.
   for (int i = 0; i < n; i++) {
-     for (int j = 0; j < n; j++) {
-        if (b[(i*n)+j] != 8) {
-          continue;
-        }
-        if (b[(i*n)+j] == 8) {
-          printf("%d",j);
-        }
-     }
+     printf("%d ", b[i])
   }
   printf("]\n");
-  //Second for loop displays the actual board, with dashes as empty spaces and "*" as queens.
-  for (int i = 0; i < n; i++) {
+
+  //Second for loop displays the actual board, with dashes as empty spaces and "*" as queens based on the array.
+  for (int row = 0; row < n; i++) {
+    place = b[row];
      for (int j = 0; j < n; j++) {
-        if (b[(i*n)+j] != 8) {
+        if (j != place) {
           printf("- ");
         }
-        if (b[(i*n)+j] == 8) {
+        if (j == place) {
           printf("* ");
         }
      }
