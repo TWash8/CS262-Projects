@@ -21,8 +21,16 @@ int displayboard(int b[], int n);
 
 int main() {
   int size = 4;
-//  int firstSolution = 0;
-//  int permutations = 0;
+  int min = 0;
+  int max = 0;
+  int firstSolution = 0;
+  int permutations = 0;
+  int trials[18];
+  int min[18];
+  int max [18];
+  int mean[18];
+  double exp[18];
+  double excl[18];
   srandom(2592);
 
   //Make the main loop for the first 10 tries for n = 4...20
@@ -54,6 +62,24 @@ int main() {
     }
     size ++;
   }
+  //For trials
+  int value = 0;
+  for (int i = 0; i < 18; i++) {
+    trials[i] = value++;
+  }
+  //For factorial size.
+int fact = 0;
+int total = 1;
+int exclIndex
+  for (int i = 4; i <= 20; i++) {
+    total = 1;
+    for (int j = i; j < 1; j--) {
+      total *= j;
+    }
+    excl[exclIndex++] = total;
+  }
+
+  //Print statistics.
 
 }
 
